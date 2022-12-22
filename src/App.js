@@ -10,7 +10,7 @@ import Posts from './components/Posts/Posts';
 import Form from './components/Form/Form';
 import { getPosts } from './actions/posts';
 
-import memories from './images/memories.png';
+import memories from './images/images2.jpeg';
 
 // styles
 import useStyles from './styles';
@@ -27,13 +27,13 @@ const App = () => {
 
   useEffect(() => {
     dispatch(getPosts())
-  }, [dispatch])
+  }, [currentId,dispatch])
 
   return (
     <Container maxWidth="lg">
       <AppBar className={classes.appBar} position='static' color='inherit'>
-        <Typography className={classes.heading} variant='h2' align='center'>Memories</Typography>
-        <img className={classes.image} src={memories} alt="memories" height="60" />
+        {/* <Typography className={classes.heading} variant='h2' align='center'>Memories</Typography> */}
+        <img className={classes.image} src={memories} alt="memories" height="60" width="100px" />
       </AppBar>
       <Grow in>
         <Container>
