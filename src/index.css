@@ -1,7 +1,7 @@
 body {
     background-color: #6e7071;
     background-image: url("https://wallpaper-mania.com/wp-content/uploads/2018/09/High_resolution_wallpaper_background_ID_77701435168.jpg");
-    background-position: center;
+    background-position: top;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    /* background-attachment: fixed; */
 }
