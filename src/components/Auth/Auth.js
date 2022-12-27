@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { GoogleLogin } from 'react-google-login';
 import { gapi } from 'gapi-script';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from "react-router-dom";
 
 // material ui components
 import {
@@ -18,17 +19,23 @@ import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 // components
 import Input from "./Input";
 import Icon from "./icon";
+import { signup, signin } from '../../actions/auth';
 
 // styles
 import useStyles from "./styles";
 
+const initialState = { firstName: '', lastName: '', email: '', password: '', confirmPassword: ''}
+
 const Auth = () => {
 
   // States
+  const [formData, setFormData] = useState(initialState);
   const [ showPassword, setShowPassword ] = useState(false);
   const [isSignup, setIsSignup] = useState(false);
  
+  // consts
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const classes = useStyles();
 
   /**
@@ -37,15 +44,25 @@ const Auth = () => {
   const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
 
   /**
-   * Method to handle the change
+   * Method to handle input change.
+   * @param {object} e 
    */
-  const handleChange = () => {};
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  };
 
   /**
    * Method to handle the on submit
+   * @param {object} e 
    */
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+    if (isSignup) {
+      dispatch(signup(formData, navigate))
+    } else {
+      dispatch(signin(formData, navigate)) 
+    }
   };
 
   /**
@@ -53,7 +70,7 @@ const Auth = () => {
    */
   const switchMode = () => {
     setIsSignup((prevIsSignup) => !prevIsSignup);
-    handleShowPassword(false);
+    setShowPassword(false);
   }
 
   const googleSuccess = async (res) => {
@@ -61,7 +78,8 @@ const Auth = () => {
      const token = res?.tokenId;
 
      try {
-        dispatch ({ type: 'AUTH', data: { result, token }})
+        dispatch ({ type: 'AUTH', data: { result, token }});
+        navigate('/');
      } catch (error) {
         console.log(error);
      }
