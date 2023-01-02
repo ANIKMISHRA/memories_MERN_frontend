@@ -1,10 +1,11 @@
 import React from 'react'
 
-import { Card, CardActions, CardContent, CardMedia, Button, Typography } from '@material-ui/core';
+import { Card, CardActions, CardContent, CardMedia, Button, Typography, Box, Paper, TextField } from '@material-ui/core';
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import ThumbUpAltOutlined from '@material-ui/icons/ThumbUpAltOutlined';
 import DeleteIcon from '@material-ui/icons/Delete';
 import MoreHorizIcon from '@material-ui/icons/MoreHoriz';
+// import {FaRegComment} from 'react-icons/fa';
 
 import moment from 'moment';
 import { useDispatch } from 'react-redux';
@@ -14,6 +15,9 @@ import { deletePost, likePost } from '../../../actions/posts';
 import useStyles from './styles';
 
 const Post = ({ post, setCurrentId }) => {
+
+    // states
+    // const [show, setShow] = useState(false);
 
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -33,7 +37,8 @@ const Post = ({ post, setCurrentId }) => {
     };
 
   return (
-    <Card className={classes.card}>
+    <>
+    <Card className={classes.card} raised elevation={6}>
       <CardMedia className={classes.media} 
       image={post.selectedFile || 'https://media.istockphoto.com/id/1373164175/photo/winter-view-of-a-red-barn.jpg?s=612x612&w=is&k=20&c=qI5zEUQ8BFdsXOsFsqqGnTaWk87ICF281smIRxZTOR8='} 
       title={post.title}  />
@@ -66,6 +71,7 @@ const Post = ({ post, setCurrentId }) => {
         <Button size='small' color='primary' disabled={!user?.result} onClick={() => dispatch(likePost(post._id))}>
          <Likes />
         </Button>
+        {/* <Button size='small' color='primary' disabled={!user?.result} onClick={() => setShow(prev => !prev)}><FaRegComment />&nbsp;Comment</Button> */}
         {(user?.result?.googleId === post?.creator || user?.result?._id === post?.creator) && (
         <Button size='small' color='primary' onClick={() => dispatch(deletePost(post._id))}>
           <DeleteIcon fontSize='small' />
@@ -74,6 +80,8 @@ const Post = ({ post, setCurrentId }) => {
         )}
       </CardActions>
     </Card>
+   
+    </>
   )
 }
 

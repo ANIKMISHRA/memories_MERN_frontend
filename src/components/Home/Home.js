@@ -1,5 +1,5 @@
 // Npm packages
-import React, {useState, useEffect} from 'react'
+import React, {useState} from 'react'
 import { useDispatch } from 'react-redux';
 import { useNavigate, useLocation } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ import ChipInput from 'material-ui-chip-input';
 // components 
 import Form from '../Form/Form';
 import Posts from '../Posts/Posts';
-import { getPosts } from '../../actions/posts';
+import { getPostsBySearch } from '../../actions/posts';
 import Pagination from '../Pagination';
 
 // styles
@@ -36,18 +36,12 @@ const Home = () => {
   const searchQuery = query.get('searchQuery');
 
   /**
-   * Component did mount
-   */
-  useEffect(() => {
-    dispatch(getPosts())
-  }, [currentId,dispatch])
-
-  /**
    * Method to handle the search post.
    */
   const searchPost = () => {
-    if(search.trim()) {
-      // dispatch:  search post
+    if(search.trim() || tags ) {
+      dispatch(getPostsBySearch({ search, tags: tags.join(',') }));
+      navigate(`/posts/search?searchQuery=${search || 'none'}&tags=${tags.join(',')}`);
     } else {
       navigate('/')
     }
@@ -108,7 +102,7 @@ const Home = () => {
         </AppBar>
           <Form currentId={currentId} setCurrentId={setCurrentId} />
           <Paper  elevation={6}>
-            <Pagination />
+            <Pagination page={page} />
           </Paper>
         </Grid>
       </Grid>

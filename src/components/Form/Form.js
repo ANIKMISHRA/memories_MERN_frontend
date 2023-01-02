@@ -21,7 +21,7 @@ const Form = ({ currentId, setCurrentId }) => {
   });
 
   // consts
-  const post = useSelector((state) => currentId ? state.posts.find((p) => p._id === currentId) : null);
+  const post = useSelector((state) => (currentId ? state.posts.posts.find((message) => message._id === currentId) : null));
   const dispatch = useDispatch();
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem('profile'));
@@ -30,6 +30,7 @@ const Form = ({ currentId, setCurrentId }) => {
    * Component did mount
    */
   useEffect(() => {
+    // if (!post?.title) clear();
     if(post) setPostData(post);
   }, [post])
 
