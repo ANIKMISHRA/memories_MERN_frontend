@@ -1,5 +1,6 @@
 // NPm packages
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import FileBase from 'react-file-base64';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -25,6 +26,7 @@ const Form = ({ currentId, setCurrentId }) => {
   const dispatch = useDispatch();
   const classes = useStyles();
   const user = JSON.parse(localStorage.getItem('profile'));
+  const navigate = useNavigate();
 
   /**
    * Component did mount
@@ -43,7 +45,7 @@ const Form = ({ currentId, setCurrentId }) => {
     if(currentId) {
       dispatch(updatePost(currentId, { ...postData, name: user?.result?.name }))
     } else {
-      dispatch(createPost({ ...postData, name: user?.result?.name }))
+      dispatch(createPost({ ...postData, name: user?.result?.name }, navigate ))
     }
     clear();
   };
@@ -71,8 +73,10 @@ const Form = ({ currentId, setCurrentId }) => {
     });
 
   }
+
+ 
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} elevation={6}>
       <form
         autoComplete="off"
         noValidate
@@ -86,7 +90,7 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Title"
           fullWidth
           value={postData.title}
-          onChange={(e) => setPostData({ ...postData, title: e.target.value})}
+          onChange={(e) => setPostData({ ...postData, title: e.target.value.trimStart()})}
         />
         <TextField
           name="message"
@@ -94,7 +98,7 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Message"
           fullWidth multiline minRows={4}
           value={postData.message}
-          onChange={(e) => setPostData({ ...postData, message: e.target.value})}
+          onChange={(e) => setPostData({ ...postData, message: e.target.value.trimStart()})}
         />
         <TextField
           name="tags"
@@ -102,7 +106,7 @@ const Form = ({ currentId, setCurrentId }) => {
           label="Tags"
           fullWidth
           value={postData.tags}
-          onChange={(e) => setPostData({ ...postData, tags: e.target.value.split(',')})}
+          onChange={(e) => setPostData({ ...postData, tags: e.target.value.trimStart().split(',')})}
         />
         <div className={classes.fileInput} >
           <FileBase 
@@ -111,7 +115,7 @@ const Form = ({ currentId, setCurrentId }) => {
              onDone={({ base64 }) => setPostData({ ...postData, selectedFile: base64 })}
           />  
         </div>
-        <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
+        <Button className={classes.buttonSubmit} disabled={ !postData.title.length > 0 && !postData.message.length > 0 }  variant="contained" color="primary" size="large" type="submit" fullWidth>Submit</Button>
         <Button variant="contained" color="secondary" size="small" onClick={clear} fullWidth>Clear</Button>
       </form>
     </Paper>
