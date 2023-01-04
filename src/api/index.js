@@ -23,3 +23,4 @@ export const commentPost = (value, id) => API.post(`/posts/${id}/commentPost`, {
 
 export const signIn = (formData) => API.post('/user/signin', formData);
 export const signUp = (formData) => API.post('/user/signup', formData);
+export const userProfile = (id) => API.get(`/user/${id}`);

@@ -125,6 +125,7 @@ const Post = ({ post, setCurrentId }) => {
               onClick={(e) => {
                 e.stopPropagation();
                 setCurrentId(post._id);
+                navigate('/');
               }}
               style={{ color: "white" }}
               size="small"

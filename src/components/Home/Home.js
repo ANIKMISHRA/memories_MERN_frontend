@@ -98,7 +98,7 @@ const Home = () => {
             onAdd={handleAdd}
             onDelete={handleDelete}
           />
-          <Button onClick={searchPost} variant="contained" className={classes.searchButton} color="primary">Search</Button>
+          <Button onClick={searchPost} disabled={!search.length > 0 } variant="contained" className={classes.searchButton} color="primary">Search</Button>
         </AppBar>
           <Form currentId={currentId} setCurrentId={setCurrentId} />
           {( !searchQuery && !tags.length) && (

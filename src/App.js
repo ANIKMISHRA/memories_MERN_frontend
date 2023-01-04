@@ -7,6 +7,7 @@ import Home from "./components/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import Auth from "./components/Auth/Auth";
 import PostDetails from "./components/PostDetails/PostDetails";
+import UserProfile from "./components/UserProfileDetails/UserProfile";
 
 import { Container } from "@material-ui/core";
 
@@ -21,6 +22,7 @@ const App = () => {
           <Route path='/posts' exact element={<Home />} />
           <Route path='/posts/search' exact element={<Home />} />
           <Route path='/posts/:id' element={<PostDetails />} />
+          <Route path='/user/:id' exact element={ <UserProfile /> } />
           <Route path='/auth' element={( !user ? <Auth /> : <Navigate replace to="/posts" />)} />
         </Routes>
       </Container>

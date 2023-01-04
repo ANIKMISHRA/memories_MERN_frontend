@@ -50,6 +50,10 @@ export default makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     textAlign: 'center',
+    cursor: 'pointer',
+    '&:hover': {
+      background: "#F5F5F5",
+   },
   },
   brandContainer: {
     display: 'flex',
@@ -58,5 +62,10 @@ export default makeStyles((theme) => ({
   purple: {
     color: theme.palette.getContrastText(deepPurple[500]),
     backgroundColor: deepPurple[500],
+    cursor: 'pointer',
+    '&:hover': {
+      background: "#F5F5F5",
+      color: '	#2F4F4F'
+   },
   },
 }));

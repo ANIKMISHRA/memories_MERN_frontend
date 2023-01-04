@@ -1,4 +1,4 @@
-import { AUTH } from '../constants/actionTypes';
+import { AUTH, USER_PROFILE } from '../constants/actionTypes';
 import * as api from '../api';
 
 
@@ -24,4 +24,14 @@ export const signup = (formData, navigate) => async (dispatch) => {
     } catch (error) {
      console.log(error);
     }
+ }
+
+ export const userPorfile = (id) => async (dispatch) => {
+   try {
+      const { data } = await api.userProfile(id);
+
+     dispatch({ type: USER_PROFILE,  payload: { user: data }});
+   } catch (error) {
+      console.log(error);
+   }
  }
